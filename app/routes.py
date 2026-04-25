@@ -11,7 +11,17 @@ from urllib.parse import urlsplit
 @app.route('/index')
 @login_required
 def index():
-    return render_template('index.html', title='Home', user=user, posts=posts)
+    posts = [
+        {
+            'author': {'username': 'Josh'},
+            'body': 'Beautiful day in Burwood!'
+        },
+        {
+            'author': {'username': 'Mary'},
+            'body': 'The movie was so cool!'
+        }
+    ]
+    return render_template('index.html', title='Home page', posts=posts)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -26,7 +36,7 @@ def login():
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or urlsplit(next_page).netloc != '':
-            next_page = url_for(index)
+            next_page = url_for('index')
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
 
