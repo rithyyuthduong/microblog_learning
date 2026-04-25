@@ -21,21 +21,21 @@ class RegistrationForm(FlaskForm):
     )
     submit = SubmitField('Register')
     
-    def validate_username(self, username):
+    def validate_username(self, username):  # User validation. Checks if the username is taken or not.
         user = db.session.scalar(sa.select(User).where(
             User.username == username.data
         ))
         if user is not None:
             raise ValidationError('Please use a different username.')
         
-    def validate_email(self, email):
+    def validate_email(self, email):  # Email validation. Checks if the email is taken or not.
         user = db.session.scalar(sa.select(User).where(
             User.email == email.data
         ))
         if user is not None:
             raise ValidationError('Please use a different email address.')
         
-class EditProfileForm(FlaskForm):
+class EditProfileForm(FlaskForm):   
     username = StringField('Username', validators=[DataRequired()])
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
     submit = SubmitField('Submit')

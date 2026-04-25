@@ -23,7 +23,7 @@ def index():
         }
     ]
     return render_template('index.html', title='Home page', posts=posts)
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST']) # Login method. Checks if the user is authenticated. If not will be routed to login form. Checks to see if User is in the database or not. If invalid it will flash an error message. When logged in, will remember user data and send out a request to send the user back to the page the user was trying to go back to.
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -38,15 +38,15 @@ def login():
         next_page = request.args.get('next')
         if not next_page or urlsplit(next_page).netloc != '':
             next_page = url_for('index')
-        return redirect(url_for('index'))
+        return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
-@app.route('/logout')
+@app.route('/logout') # Logging out navigation
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('index')) 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST']) # Checks if user is valid, if not then routes user to registration form. Check for valid usernames and email on submit. Check the password and set the values to the database. Adding and committing value to the table. Flash registered message and redirect back to home page.
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -60,7 +60,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
-@app.route('/user/<username>')
+@app.route('/user/<username>') ##Profile page.
 @login_required
 def user(username):
     user = db.first_or_404(sa.select(User).where(User.username == username))
@@ -70,13 +70,13 @@ def user(username):
     ]
     return render_template('user.html', user=user, posts=posts)
 
-@app.before_request
+@app.before_request  # Checks if user is logged in and sets the user last seen to current timezone.
 def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.now(timezone.utc)
         db.session.commit()
         
-@app.route('/edit_profile', methods=['GET', 'POST'])
+@app.route('/edit_profile', methods=['GET', 'POST']) # Edit profile. Checks if the input submissions are correct and updates information with POST request. GET request to fill in saved information from the database.
 @login_required
 def edit_profile():
     form = EditProfileForm()
