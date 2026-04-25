@@ -4,24 +4,13 @@ from app.forms import loginForm
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from app.models import User
-from urllib.parase import urlsplit
+from urllib.parse import urlsplit
 
 
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
-    user = {'username': 'Rithy'}
-    posts = [
-        {
-            'author': {'username': 'Josh'},
-            'body': 'Beautiful day in Burwood!'
-        },
-        {
-            'author': {'username': 'Mary'},
-            'body': 'The movie was so cool!'
-        }
-    ]
     return render_template('index.html', title='Home', user=user, posts=posts)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
