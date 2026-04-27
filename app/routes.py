@@ -79,7 +79,7 @@ def before_request():
 @app.route('/edit_profile', methods=['GET', 'POST']) # Edit profile. Checks if the input submissions are correct and updates information with POST request. GET request to fill in saved information from the database.
 @login_required
 def edit_profile():
-    form = EditProfileForm()
+    form = EditProfileForm(current_user.username)
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
