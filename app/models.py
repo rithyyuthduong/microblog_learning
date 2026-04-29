@@ -26,12 +26,14 @@ class User(UserMixin, db.Model):  ## The database table
     last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(
         default=lambda: datetime.now(timezone.utc))
     following: so.WriteOnlyMapped['User'] = so.relationship(
-        secondary=followers, primaryjoin=(followers.c.follower_id == sa.literal_column('user.id')),
-        secondaryjoin=(followers.c.followed_id == sa.literal_column('user.id')),
+        secondary=followers,
+        primaryjoin='followers.c.follower_id == User.id',
+        secondaryjoin='followers.c.followed_id == User.id',
         back_populates='followers')
     followers: so.WriteOnlyMapped['User'] = so.relationship(
-        secondary=followers, primaryjoin=(followers.c.followed_id == sa.literal_column('user.id')),
-        secondaryjoin=(followers.c.follower_id == sa.literal_column('user.id')),
+        secondary=followers,
+        primaryjoin='followers.c.followed_id == User.id',
+        secondaryjoin='followers.c.follower_id == User.id',
         back_populates='following')
     
     def __repr__(self):

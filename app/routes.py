@@ -13,13 +13,15 @@ from datetime import datetime, timezone
 @login_required
 def index():
     form = PostForm()
-    if form.validate.on_submit():
+    if form.validate_on_submit():
         post = Post(body=form.post, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
         return redirect(url_for('index'))
-    posts = db.session.scalars(current_user.following_posts()).all()
+    page = request.args.get('page', 1, type=int)
+    posts = db.paginate(current_user.following_posts(), page=page,
+                        per_page=app.config['POSTS_PER_PAGE'], error_out=False)
     return render_template('index.html', title='Home page', posts=posts)
 
 @app.route('/login', methods=['GET', 'POST']) # Login method. Checks if the user is authenticated. If not will be routed to login form. Checks to see if User is in the database or not. If invalid it will flash an error message. When logged in, will remember user data and send out a request to send the user back to the page the user was trying to go back to.
@@ -93,6 +95,7 @@ def edit_profile():
 @app.route('/explore')
 @login_required
 def explore():
+    page = request.args.get('pages', 1, type=int)
     query = sa.select(Post).order_by(Post.timestamp.desc())
-    posts = db.session.scalars(query).all()
+    posts = db.paginate(query, page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
     return render_template('index.html', title='Explore', posts=posts)
