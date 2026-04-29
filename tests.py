@@ -44,7 +44,7 @@ class UserModelCase(unittest.TestCase):
         u1.follow(u2)
         db.session.commit()
         self.assertTrue(u1.is_following(u2))
-        self.assertEqual(u1.following_count(), 1)
+        self.assertEqual(u1.followers_count(), 1)
         self.assertEqual(u2.followers_count(), 1)
         u1_following = db.session.scalars(u1.following.select()).all()
         u2_followers = db.session.scalars(u2.followers.select()).all()
