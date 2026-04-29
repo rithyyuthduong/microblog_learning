@@ -19,17 +19,9 @@ def index():
         db.session.commit()
         flash('Your post is now live!')
         return redirect(url_for('index'))
-    posts = [
-        {
-            'author': {'username': 'Josh'},
-            'body': 'Beautiful day in Burwood!'
-        },
-        {
-            'author': {'username': 'Mary'},
-            'body': 'The movie was so cool!'
-        }
-    ]
+    posts = db.session.scalars(current_user.following_posts()).all()
     return render_template('index.html', title='Home page', posts=posts)
+
 @app.route('/login', methods=['GET', 'POST']) # Login method. Checks if the user is authenticated. If not will be routed to login form. Checks to see if User is in the database or not. If invalid it will flash an error message. When logged in, will remember user data and send out a request to send the user back to the page the user was trying to go back to.
 def login():
     if current_user.is_authenticated:
@@ -97,3 +89,10 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)
+
+@app.route('/explore')
+@login_required
+def explore():
+    query = sa.select(Post).order_by(Post.timestamp.desc())
+    posts = db.session.scalars(query).all()
+    return render_template('index.html', title='Explore', posts=posts)
