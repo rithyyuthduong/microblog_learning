@@ -1,12 +1,12 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import loginForm, RegistrationForm, EditProfileForm, PostForm
+from app.forms import loginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from app.models import User, Post
 from urllib.parse import urlsplit
 from datetime import datetime, timezone
-
+from app.email import send_password_request_email
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -103,3 +103,16 @@ def explore():
     query = sa.select(Post).order_by(Post.timestamp.desc())
     posts = db.paginate(query, page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
     return render_template('index.html', title='Explore', posts=posts)
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm
+    if form.validate_on_submit:
+        user = db.session.scalar(sa.select(User).where(User.email == form.email.data))
+        if user:
+            send_password_request_email(user)
+        flash('Check your email for the instructions sent to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html', title='Reset Password', form=form)
