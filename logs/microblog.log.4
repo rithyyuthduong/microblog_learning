@@ -1,4 +1,4 @@
-2026-04-29 18:07:08,906 ERROR: Exception on /register [POST] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+2026-05-01 18:10:47,669 ERROR: Exception on /login [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
 Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,88 +12,110 @@ Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\routes.py", line 53, in register
-    if form.validate_on_submit():
-       ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_wtf\form.py", line 86, in validate_on_submit
-    return self.is_submitted() and self.validate(extra_validators=extra_validators)
-                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\form.py", line 330, in validate
-    return super().validate(extra)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\form.py", line 147, in validate
-    if not field.validate(self, extra):
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\fields\core.py", line 234, in validate
-    stop_validation = self._run_validation_chain(form, chain)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\fields\core.py", line 254, in _run_validation_chain
-    validator(form, self)
-  File "C:\Users\U-ser\microblog\app\forms.py", line 25, in validate_username
-    user = db.session.scalar(sa.select(User).where(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\scoping.py", line 1826, in scalar
-    return self._proxied.scalar(
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2399, in scalar
-    return self._execute_internal(
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2249, in _execute_internal
-    result: Result[Any] = compile_state_cls.orm_execute_statement(
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
-    result = conn.execute(
-             ^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
-    return meth(
-           ^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
-    return connection._execute_clauseelement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1633, in _execute_clauseelement
-    compiled_sql, extracted_params, cache_hit = elem._compile_w_cache(
-                                                ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 716, in _compile_w_cache
-    compiled_sql = self._compiler(
-                   ^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 324, in _compiler
-    return dialect.statement_compiler(dialect, self, **kw)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\sql\compiler.py", line 1461, in __init__
-    Compiled.__init__(self, dialect, statement, **kwargs)
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\sql\compiler.py", line 901, in __init__
-    self.string = self.process(self.statement, **compile_kwargs)
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\sql\compiler.py", line 947, in process
-    return obj._compiler_dispatch(self, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\sql\visitors.py", line 138, in _compiler_dispatch
-    return meth(self, **kw)  # type: ignore  # noqa: E501
-           ^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\sql\compiler.py", line 4809, in visit_select
-    compile_state = select_stmt._compile_state_factory(
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\sql\base.py", line 775, in create_for_statement
-    return klass.create_for_statement(statement, compiler, **kw)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 447, in create_for_statement
-    return cls._create_orm_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 1175, in _create_orm_context
-    _QueryEntity.to_compile_state(
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 2628, in to_compile_state
-    _MapperEntity(
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 2708, in __init__
-    entity._post_inspect
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 1235, in __get__
-    obj.__dict__[self.__name__] = result = self.fget(obj)
-                                           ^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2733, in _post_inspect
-    self._check_configure()
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2410, in _check_configure
-    _configure_registries({self.registry}, cascade=True)
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4227, in _configure_registries
-    _do_configure_registries(registries, cascade)
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4264, in _do_configure_registries
-    raise e
-sqlalchemy.exc.InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[User(user)]'. Original exception was: Could not locate any simple equality expressions involving locally mapped foreign key columns for primary join condition 'followers.follower_id = user.id' on relationship User.following.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or are annotated in the join condition with the foreign() annotation. To allow comparison operators other than '==', the relationship can be marked as viewonly=True.
+  File "C:\Users\U-ser\microblog\app\routes.py", line 47, in login
+    return render_template('login.html', title='Sign In', form=form)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\U-ser\microblog\app\templates\login.html", line 2, in top-level template code
+    {% import "bootstrap_wtf.html" as wtf %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\templates\base.html", line 52, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\templates\login.html", line 5, in block 'content'
+    <h1>{{ _('Sign In') }}</h1>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: '_' is undefined
+2026-05-01 18:10:47,785 ERROR: Exception on /login [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+Traceback (most recent call last):
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\routes.py", line 47, in login
+    return render_template('login.html', title='Sign In', form=form)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\U-ser\microblog\app\templates\login.html", line 2, in top-level template code
+    {% import "bootstrap_wtf.html" as wtf %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\templates\base.html", line 52, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\templates\login.html", line 5, in block 'content'
+    <h1>{{ _('Sign In') }}</h1>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: '_' is undefined
+2026-05-01 18:12:46,398 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
+2026-05-01 18:12:50,567 ERROR: Exception on /login [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+Traceback (most recent call last):
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\routes.py", line 47, in login
+    return render_template('login.html', title='Sign In', form=form)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\U-ser\microblog\app\templates\login.html", line 2, in top-level template code
+    {% import "bootstrap_wtf.html" as wtf %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\templates\base.html", line 52, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\templates\login.html", line 5, in block 'content'
+    <h1>{{ _('Sign In') }}</h1>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: '_' is undefined

@@ -1,4 +1,4 @@
-2026-04-29 18:07:38,577 ERROR: Exception on /register [POST] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+2026-04-29 18:07:35,455 ERROR: Exception on /register [POST] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
 Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
     response = self.full_dispatch_request()
@@ -97,37 +97,3 @@ Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4264, in _do_configure_registries
     raise e
 sqlalchemy.exc.InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[User(user)]'. Original exception was: Could not locate any simple equality expressions involving locally mapped foreign key columns for primary join condition 'followers.follower_id = user.id' on relationship User.following.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or are annotated in the join condition with the foreign() annotation. To allow comparison operators other than '==', the relationship can be marked as viewonly=True.
-2026-04-29 18:09:38,329 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:44]
-2026-04-29 18:09:47,540 ERROR: Exception on / [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
-Traceback (most recent call last):
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_login\utils.py", line 290, in decorated_view
-    return current_app.ensure_sync(func)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\routes.py", line 16, in index
-    if form.validate.on_submit():
-       ^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'function' object has no attribute 'on_submit'
-2026-04-29 18:10:39,473 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:44]
-2026-04-29 18:12:22,114 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:44]
-2026-04-29 18:17:03,933 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:44]
-2026-04-29 18:32:41,463 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:44]
-2026-04-30 16:56:42,448 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
-2026-04-30 16:58:54,645 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
-2026-04-30 17:22:06,941 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
-2026-04-30 17:22:07,032 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
-2026-04-30 17:22:07,032 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
-2026-04-30 17:22:10,726 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
-2026-04-30 17:22:10,759 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
-2026-04-30 17:22:10,759 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
