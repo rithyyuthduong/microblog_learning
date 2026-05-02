@@ -21,14 +21,16 @@ class RegistrationForm(FlaskForm):
     )
     submit = SubmitField('Register')
     
-    def validate_username(self, username):  # User validation. Checks if the username is taken or not.
+    # Rejects usernames that are already taken.
+    def validate_username(self, username):
         user = db.session.scalar(sa.select(User).where(
             User.username == username.data
         ))
         if user is not None:
             raise ValidationError('Please use a different username.')
         
-    def validate_email(self, email):  # Email validation. Checks if the email is taken or not.
+    # Rejects email addresses that are already registered.
+    def validate_email(self, email):
         user = db.session.scalar(sa.select(User).where(
             User.email == email.data
         ))
@@ -40,10 +42,12 @@ class EditProfileForm(FlaskForm):
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
     submit = SubmitField('Submit')
     
+    # Stores the original username so validate_username can tell a real change from a no-op.
     def __init__(self, original_username, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.original_username = original_username
-        
+
+    # Only hits the db if the name actually changed - no point querying on a no-op edit.
     def validate_username(self, username):
         if username.data != self.original_username:
             user = db.session.scalar(sa.select(User).where(

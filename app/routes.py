@@ -1,13 +1,15 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, g
 from app import app, db
-from app.forms import loginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm
+from app.forms import loginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, EmptyForm
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from app.models import User, Post
 from urllib.parse import urlsplit
 from datetime import datetime, timezone
 from app.email import send_password_request_email
+from flask_babel import _, get_locale
 
+# Home feed - shows posts from people the current user follows, with pagination.
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
@@ -28,7 +30,8 @@ def index():
         if posts.has_prev else None
     return render_template('index.html', title='Home page', form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
 
-@app.route('/login', methods=['GET', 'POST']) # Login method. Checks if the user is authenticated. If not will be routed to login form. Checks to see if User is in the database or not. If invalid it will flash an error message. When logged in, will remember user data and send out a request to send the user back to the page the user was trying to go back to.
+# If already logged in, skip the form. On success, sends the user back to wherever they were trying to go.
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -46,12 +49,14 @@ def login():
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
-@app.route('/logout') # Logging out navigation
+# Clears the session and redirects back to the home page.
+@app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index')) 
+    return redirect(url_for('index'))
 
-@app.route('/register', methods=['GET', 'POST']) # Checks if user is valid, if not then routes user to registration form. Check for valid usernames and email on submit. Check the password and set the values to the database. Adding and committing value to the table. Flash registered message and redirect back to home page.
+# New user sign-up. The form validators catch duplicate usernames/emails before we write to the db.
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -65,7 +70,8 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
-@app.route('/user/<username>') ##Profile page.
+# Profile page for any user. Fetches their posts in reverse-chronological order, paginated.
+@app.route('/user/<username>')
 @login_required
 def user(username):
     user = db.first_or_404(sa.select(User).where(User.username == username))
@@ -80,13 +86,16 @@ def user(username):
         if posts.has_prev else None
     return render_template('user.html', user=user, posts=posts.items, next_url=next_url, prev_url=prev_url)
 
-@app.before_request  # Checks if user is logged in and sets the user last seen to current timezone.
+# Runs before every request - keeps last_seen up to date and sets the Babel locale.
+@app.before_request
 def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.now(timezone.utc)
         db.session.commit()
-        
-@app.route('/edit_profile', methods=['GET', 'POST']) # Edit profile. Checks if the input submissions are correct and updates information with POST request. GET request to fill in saved information from the database.
+    g.locale = str(get_locale())
+
+# Profile edit page. GET pre-fills the form with current data; POST validates and saves changes.
+@app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
     form = EditProfileForm(current_user.username)
@@ -101,6 +110,7 @@ def edit_profile():
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)
 
+# Global feed showing all posts from everyone, newest first.
 @app.route('/explore')
 @login_required
 def explore():
@@ -109,6 +119,7 @@ def explore():
     posts = db.paginate(query, page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
     return render_template('index.html', title='Explore', posts=posts)
 
+# Sends a reset email if the address exists. Always flashes the same message to avoid revealing whether an email is registered.
 @app.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
     if current_user.is_authenticated:
@@ -122,6 +133,7 @@ def reset_password_request():
         return redirect(url_for('login'))
     return render_template('reset_password_request.html', title='Reset Password', form=form)
 
+# Validates the JWT token and lets the user set a new password if it's still valid.
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
@@ -136,3 +148,47 @@ def reset_password(token):
         flash('Your password has been reset.')
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
+
+# Follows another user. The empty form is only here for CSRF protection.
+@app.route('follow/<username>', methods=['POST'])
+@login_required
+def follow(username):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user = db.session.scalar(
+            sa.select(User).where(User.username == username)
+        )
+        if user is not None:
+            flash(f'User {username} not found')
+            return redirect(url_for('index'))
+        if user == current_user:
+            flash('You cannot follow yourself!')
+            return redirect(url_for('user', username=username))
+        current_user.follow(user)
+        db.session.commit()
+        flash(f'You are following {username}!')
+        return redirect(url_for('user', username=username))
+    else:
+        return redirect(url_for('index'))
+
+# Unfollows a user. Same CSRF-only form pattern as follow().
+@app.route('/unfollow/<username>', methods=['POST'])
+@login_required
+def unfollow(username):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user = db.session.scalar(
+            sa.select(User).where(User.username == username)
+        )
+        if user is not None:
+            flash(f'User {username} not found')
+            return redirect(url_for('index'))
+        if user == current_user:
+            flash('You cannot unfollow yourself!')
+            return redirect(url_for('index'))
+        current_user.unfollow(user)
+        db.session.commit()
+        flash(f'You are not following {username}.')
+        return redirect(url_for('user', username=username))
+    else:
+        return redirect(url_for('index'))

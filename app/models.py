@@ -1,4 +1,4 @@
-from datetime import datetime, timezone 
+from datetime import datetime, timezone
 from typing import Optional
 import sqlalchemy as sa
 import sqlalchemy.orm as so
@@ -37,34 +37,51 @@ class User(UserMixin, db.Model):  ## The database table
         primaryjoin='followers.c.followed_id == User.id',
         secondaryjoin='followers.c.follower_id == User.id',
         back_populates='following')
-    
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
-    
+
+    # Hashes and stores the password - we never keep the plaintext.
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password)     
+        self.password_hash = generate_password_hash(password)
+
+    # Checks the given password against the stored hash.
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    # Builds a Gravatar URL for this user's email at the requested pixel size.
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
+
+    # Adds user to the following set, skipping if we're already following them.
     def follow(self, user):
         if not self.is_following(user):
             self.following.add(user)
+
+    # Removes user from the following set.
     def unfollow(self, user):
         if self.is_following(user):
             self.following.remove(user)
+
+    # Returns True if self is currently following the given user.
     def is_following(self, user):
         query = self.following.select().where(User.id == user.id)
         return db.session.scalar(query) is not None
+
+    # Counts how many people follow this user.
     def followers_count(self):
         query = sa.select(sa.func.count()).select_from(
             self.followers.select().subquery())
         return db.session.scalar(query)
+
+    # Counts how many people this user is following.
     def following_count(self):
         query = sa.select(sa.func.count()).select_from(
             self.following.select().subquery())
         return db.session.scalar(query)
+
+    # Returns a query for posts from followed users plus the user's own posts, newest first.
     def following_posts(self):
         Author = so.aliased(User)
         Follower = so.aliased(User)
@@ -79,12 +96,15 @@ class User(UserMixin, db.Model):  ## The database table
             .group_by(Post)
             .order_by(Post.timestamp.desc())
         )
+
+    # Generates a short-lived JWT for the password reset flow.
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
             app.config['SECRET_KEY'], algorithm='HS256'
         )
-    
+
+    # Decodes and validates the reset token, returning the matching User or None if it's invalid/expired.
     @staticmethod
     def verify_reset_password_token(token):
         try:
@@ -100,11 +120,11 @@ class Post(db.Model):     ##Post values
         index=True, default=lambda: datetime.now(timezone.utc))
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id), index=True)
     author: so.Mapped[User] = so.relationship(back_populates='posts')
-    
+
     def __repr__(self):
         return '<Post {}>'.format(self.body)
-    
+
+# Flask-Login callback - looks up a user by id from the session cookie.
 @login.user_loader
 def load_user(id):
     return db.session.get(User, int(id))
-    
