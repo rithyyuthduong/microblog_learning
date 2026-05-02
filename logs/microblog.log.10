@@ -1,4 +1,4 @@
-2026-04-29 18:07:17,449 ERROR: Exception on /login [POST] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+2026-04-29 18:07:35,455 ERROR: Exception on /register [POST] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
 Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,9 +12,26 @@ Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\routes.py", line 31, in login
-    user = db.session.scalar(
-           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\routes.py", line 53, in register
+    if form.validate_on_submit():
+       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_wtf\form.py", line 86, in validate_on_submit
+    return self.is_submitted() and self.validate(extra_validators=extra_validators)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\form.py", line 330, in validate
+    return super().validate(extra)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\form.py", line 147, in validate
+    if not field.validate(self, extra):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\fields\core.py", line 234, in validate
+    stop_validation = self._run_validation_chain(form, chain)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\fields\core.py", line 254, in _run_validation_chain
+    validator(form, self)
+  File "C:\Users\U-ser\microblog\app\forms.py", line 25, in validate_username
+    user = db.session.scalar(sa.select(User).where(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\sqlalchemy\orm\scoping.py", line 1826, in scalar
     return self._proxied.scalar(
            ^^^^^^^^^^^^^^^^^^^^^

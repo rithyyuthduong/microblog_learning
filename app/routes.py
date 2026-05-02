@@ -14,7 +14,7 @@ from app.email import send_password_request_email
 def index():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.post, author=current_user)
+        post = Post(body=form.post.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
@@ -26,7 +26,7 @@ def index():
         if posts.has_next else None
     prev_url = url_for('index', page=posts.prev_num) \
         if posts.has_prev else None
-    return render_template('index.html', title='Home page', posts=posts.items, next_url=next_url, prev_url=prev_url)
+    return render_template('index.html', title='Home page', form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
 
 @app.route('/login', methods=['GET', 'POST']) # Login method. Checks if the user is authenticated. If not will be routed to login form. Checks to see if User is in the database or not. If invalid it will flash an error message. When logged in, will remember user data and send out a request to send the user back to the page the user was trying to go back to.
 def login():
@@ -69,11 +69,16 @@ def register():
 @login_required
 def user(username):
     user = db.first_or_404(sa.select(User).where(User.username == username))
-    posts = [
-        {'author': user, 'body': 'Test 1'},
-        {'author': user, 'body': 'Test 2'}
-    ]
-    return render_template('user.html', user=user, posts=posts)
+    page = request.args.get('page', 1, type=int)
+    posts = db.paginate(sa.select(Post).where(Post.author == user).order_by(Post.timestamp.desc()),
+                        page=page,
+                        per_page=app.config['POSTS_PER_PAGE'],
+                        error_out=False)
+    next_url = url_for('user', username=user.username, page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('user', username=user.username, page=posts.prev_num) \
+        if posts.has_prev else None
+    return render_template('user.html', user=user, posts=posts.items, next_url=next_url, prev_url=prev_url)
 
 @app.before_request  # Checks if user is logged in and sets the user last seen to current timezone.
 def before_request():
