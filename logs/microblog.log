@@ -1,57 +1,22 @@
-2026-05-02 18:37:55,494 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:48]
-2026-05-02 18:38:13,764 ERROR: Exception on /user/ry [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+2026-05-03 17:30:50,520 ERROR: Exception on /favicon.ico [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
 Traceback (most recent call last):
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
     rv = self.dispatch_request()
          ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_login\utils.py", line 290, in decorated_view
-    return current_app.ensure_sync(func)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\routes.py", line 76, in user
-    return render_template('user.html', user=user, posts=posts)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
-    return _render(app, template, context)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
-    rv = template.render(context)
-         ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
-    self.environment.handle_exception()
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\U-ser\microblog\app\templates\user.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "C:\Users\U-ser\microblog\app\templates\base.html", line 52, in top-level template code
-    {% block content %}{% endblock %}
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\templates\user.html", line 23, in block 'content'
-    {% include '_post.html' %}
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\templates\_post.html", line 10, in top-level template code
-    said {{ moment(post.timestamp).fromNow() }}:
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_moment\__init__.py", line 237, in fromNow
-    return self._render("fromNow", no_suffix=int(no_suffix),
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_moment\__init__.py", line 194, in _render
-    t = self._timestamp_as_iso_8601(self.timestamp)
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_moment\__init__.py", line 190, in _timestamp_as_iso_8601
-    return timestamp.strftime('%Y-%m-%dT%H:%M:%S' + tz)
-           ^^^^^^^^^^^^^^^^^^
-jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'timestamp'
-2026-05-02 18:41:29,865 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:48]
-2026-05-02 18:41:36,811 ERROR: Exception on /user/ry [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1458, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1440, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\ctx.py", line 353, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\werkzeug\routing\map.py", line 655, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
 Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
     response = self.full_dispatch_request()
@@ -59,70 +24,33 @@ Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
     rv = self.handle_user_exception(e)
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_login\utils.py", line 290, in decorated_view
-    return current_app.ensure_sync(func)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\routes.py", line 73, in user
-    page=page,
-         ^^^^
-NameError: name 'page' is not defined
-2026-05-02 18:42:48,848 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:48]
-2026-05-02 19:36:46,751 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:53]
-2026-05-02 19:37:36,677 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:53]
-2026-05-02 19:37:40,817 ERROR: Exception on / [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
-Traceback (most recent call last):
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1482, in full_dispatch_request
-    rv = self.preprocess_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1974, in preprocess_request
-    rv = self.ensure_sync(before_func)()
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\routes.py", line 95, in before_request
-    g.locale = str(get_locale())
-                   ^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 259, in get_locale
-    babel = get_babel()
-            ^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 46, in get_babel
-    return app.extensions['babel']
-           ~~~~~~~~~~~~~~^^^^^^^^^
-KeyError: 'babel'
-2026-05-02 19:37:41,985 ERROR: Exception on / [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
-Traceback (most recent call last):
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1482, in full_dispatch_request
-    rv = self.preprocess_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1974, in preprocess_request
-    rv = self.ensure_sync(before_func)()
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\routes.py", line 95, in before_request
-    g.locale = str(get_locale())
-                   ^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 259, in get_locale
-    babel = get_babel()
-            ^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 46, in get_babel
-    return app.extensions['babel']
-           ~~~~~~~~~~~~~~^^^^^^^^^
-KeyError: 'babel'
-2026-05-02 19:38:57,270 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:54]
-2026-05-03 15:42:06,958 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:54]
-2026-05-03 15:42:19,406 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:54]
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1341, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1281, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\errors\handlers.py", line 8, in not_found_error
+    return render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\templating.py", line 64, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\templating.py", line 98, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: 404.html

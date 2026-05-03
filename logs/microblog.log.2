@@ -1,4 +1,5 @@
-2026-05-01 18:16:54,868 ERROR: Exception on /user/ry [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+2026-05-02 18:37:55,494 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:48]
+2026-05-02 18:38:13,764 ERROR: Exception on /user/ry [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
 Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
     response = self.full_dispatch_request()
@@ -33,16 +34,24 @@ Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\app\templates\base.html", line 52, in top-level template code
     {% block content %}{% endblock %}
     ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\templates\user.html", line 19, in block 'content'
+  File "C:\Users\U-ser\microblog\app\templates\user.html", line 23, in block 'content'
     {% include '_post.html' %}
     ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\templates\_post.html", line 4, in top-level template code
-    <a href="{{ url_for('user', 'username=post.author.username') }}">
+  File "C:\Users\U-ser\microblog\app\templates\_post.html", line 10, in top-level template code
+    said {{ moment(post.timestamp).fromNow() }}:
     ^^^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: Flask.url_for() takes 2 positional arguments but 3 were given
-2026-05-01 18:18:27,472 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
-2026-05-01 18:21:00,203 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
-2026-05-01 18:21:16,023 ERROR: Exception on /edit_profile [POST] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_moment\__init__.py", line 237, in fromNow
+    return self._render("fromNow", no_suffix=int(no_suffix),
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_moment\__init__.py", line 194, in _render
+    t = self._timestamp_as_iso_8601(self.timestamp)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_moment\__init__.py", line 190, in _timestamp_as_iso_8601
+    return timestamp.strftime('%Y-%m-%dT%H:%M:%S' + tz)
+           ^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'timestamp'
+2026-05-02 18:41:29,865 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:48]
+2026-05-02 18:41:36,811 ERROR: Exception on /user/ry [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
 Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
     response = self.full_dispatch_request()
@@ -59,28 +68,14 @@ Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_login\utils.py", line 290, in decorated_view
     return current_app.ensure_sync(func)(*args, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\routes.py", line 88, in edit_profile
-    if form.validate_on_submit():
-       ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_wtf\form.py", line 86, in validate_on_submit
-    return self.is_submitted() and self.validate(extra_validators=extra_validators)
-                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\form.py", line 330, in validate
-    return super().validate(extra)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\form.py", line 147, in validate
-    if not field.validate(self, extra):
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\fields\core.py", line 234, in validate
-    stop_validation = self._run_validation_chain(form, chain)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\fields\core.py", line 254, in _run_validation_chain
-    validator(form, self)
-  File "C:\Users\U-ser\microblog\app\forms.py", line 52, in validate_username
-    if user is not None:
-       ^^^^
-UnboundLocalError: cannot access local variable 'user' where it is not associated with a value
-2026-05-01 18:21:20,057 ERROR: Exception on /edit_profile [POST] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+  File "C:\Users\U-ser\microblog\app\routes.py", line 73, in user
+    page=page,
+         ^^^^
+NameError: name 'page' is not defined
+2026-05-02 18:42:48,848 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:48]
+2026-05-02 19:36:46,751 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:53]
+2026-05-02 19:37:36,677 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:53]
+2026-05-02 19:37:40,817 ERROR: Exception on / [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
 Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
     response = self.full_dispatch_request()
@@ -88,35 +83,47 @@ Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
     rv = self.handle_user_exception(e)
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_login\utils.py", line 290, in decorated_view
-    return current_app.ensure_sync(func)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\app\routes.py", line 88, in edit_profile
-    if form.validate_on_submit():
-       ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_wtf\form.py", line 86, in validate_on_submit
-    return self.is_submitted() and self.validate(extra_validators=extra_validators)
-                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\form.py", line 330, in validate
-    return super().validate(extra)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\form.py", line 147, in validate
-    if not field.validate(self, extra):
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\fields\core.py", line 234, in validate
-    stop_validation = self._run_validation_chain(form, chain)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\wtforms\fields\core.py", line 254, in _run_validation_chain
-    validator(form, self)
-  File "C:\Users\U-ser\microblog\app\forms.py", line 52, in validate_username
-    if user is not None:
-       ^^^^
-UnboundLocalError: cannot access local variable 'user' where it is not associated with a value
-2026-05-01 18:23:53,770 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:46]
-2026-05-02 18:35:27,186 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:48]
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1482, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1974, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\routes.py", line 95, in before_request
+    g.locale = str(get_locale())
+                   ^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 259, in get_locale
+    babel = get_babel()
+            ^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 46, in get_babel
+    return app.extensions['babel']
+           ~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'babel'
+2026-05-02 19:37:41,985 ERROR: Exception on / [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+Traceback (most recent call last):
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1482, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1974, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\routes.py", line 95, in before_request
+    g.locale = str(get_locale())
+                   ^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 259, in get_locale
+    babel = get_babel()
+            ^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 46, in get_babel
+    return app.extensions['babel']
+           ~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'babel'
+2026-05-02 19:38:57,270 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:54]
+2026-05-03 15:42:06,958 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:54]
+2026-05-03 15:42:19,406 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:54]
+2026-05-03 17:30:35,247 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:75]

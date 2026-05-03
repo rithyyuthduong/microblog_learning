@@ -3,38 +3,40 @@ os.environ['DATABASE_URL'] = 'sqlite://'
 
 from datetime import datetime, timezone, timedelta
 import unittest
-from app import app, db
+from app import create_app, db
 from app.models import User, Post
+from config import Config
+
+
+class TestConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite://'
 
 
 class UserModelCase(unittest.TestCase):
-    # Sets up a fresh in-memory database before each test.
     def setUp(self):
-        self.app_context = app.app_context()
+        self.app = create_app(TestConfig)
+        self.app_context = self.app.app_context()
         self.app_context.push()
         db.create_all()
 
-    # Drops all tables and pops the app context after each test.
     def tearDown(self):
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
 
-    # Verifies that password hashing works and that wrong passwords are rejected.
     def test_password_hashing(self):
         u = User(username='susan', email='susan@example.com')
         u.set_password('cat')
         self.assertFalse(u.check_password('dog'))
         self.assertTrue(u.check_password('cat'))
 
-    # Checks that the Gravatar URL is generated correctly for a given email.
     def test_avatar(self):
         u = User(username='john', email='john@example.com')
         self.assertEqual(u.avatar(128), ('https://www.gravatar.com/avatar/'
                                          'd4c74594d841139328695756648b6bd6'
                                          '?d=identicon&s=128'))
 
-    # Runs through the full follow/unfollow cycle and checks that counts stay correct.
     def test_follow(self):
         u1 = User(username='john', email='john@example.com')
         u2 = User(username='susan', email='susan@example.com')
@@ -62,16 +64,13 @@ class UserModelCase(unittest.TestCase):
         self.assertEqual(u1.following_count(), 0)
         self.assertEqual(u2.followers_count(), 0)
 
-    # Verifies that following_posts returns the right posts and nobody sees posts from strangers.
     def test_follow_posts(self):
-        # create four users
         u1 = User(username='john', email='john@example.com')
         u2 = User(username='susan', email='susan@example.com')
         u3 = User(username='mary', email='mary@example.com')
         u4 = User(username='david', email='david@example.com')
         db.session.add_all([u1, u2, u3, u4])
 
-        # create four posts
         now = datetime.now(timezone.utc)
         p1 = Post(body="post from john", author=u1,
                   timestamp=now + timedelta(seconds=1))
@@ -84,14 +83,12 @@ class UserModelCase(unittest.TestCase):
         db.session.add_all([p1, p2, p3, p4])
         db.session.commit()
 
-        # setup the followers
-        u1.follow(u2)  # john follows susan
-        u1.follow(u4)  # john follows david
-        u2.follow(u3)  # susan follows mary
-        u3.follow(u4)  # mary follows david
+        u1.follow(u2)
+        u1.follow(u4)
+        u2.follow(u3)
+        u3.follow(u4)
         db.session.commit()
 
-        # check the following posts of each user
         f1 = db.session.scalars(u1.following_posts()).all()
         f2 = db.session.scalars(u2.following_posts()).all()
         f3 = db.session.scalars(u3.following_posts()).all()
