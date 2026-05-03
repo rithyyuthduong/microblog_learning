@@ -73,3 +73,56 @@ Traceback (most recent call last):
          ^^^^
 NameError: name 'page' is not defined
 2026-05-02 18:42:48,848 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:48]
+2026-05-02 19:36:46,751 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:53]
+2026-05-02 19:37:36,677 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:53]
+2026-05-02 19:37:40,817 ERROR: Exception on / [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+Traceback (most recent call last):
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1482, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1974, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\routes.py", line 95, in before_request
+    g.locale = str(get_locale())
+                   ^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 259, in get_locale
+    babel = get_babel()
+            ^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 46, in get_babel
+    return app.extensions['babel']
+           ~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'babel'
+2026-05-02 19:37:41,985 ERROR: Exception on / [GET] [in C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py:1414]
+Traceback (most recent call last):
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1482, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask\app.py", line 1974, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\app\routes.py", line 95, in before_request
+    g.locale = str(get_locale())
+                   ^^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 259, in get_locale
+    babel = get_babel()
+            ^^^^^^^^^^^
+  File "C:\Users\U-ser\microblog\.venv\Lib\site-packages\flask_babel\__init__.py", line 46, in get_babel
+    return app.extensions['babel']
+           ~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'babel'
+2026-05-02 19:38:57,270 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:54]
+2026-05-03 15:42:06,958 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:54]
+2026-05-03 15:42:19,406 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:54]

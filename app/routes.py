@@ -150,7 +150,7 @@ def reset_password(token):
     return render_template('reset_password.html', form=form)
 
 # Follows another user. The empty form is only here for CSRF protection.
-@app.route('follow/<username>', methods=['POST'])
+@app.route('/follow/<username>', methods=['POST'])
 @login_required
 def follow(username):
     form = EmptyForm()
