@@ -23,6 +23,7 @@ class RegistrationForm(FlaskForm):
                                            EqualTo('password')])
     submit = SubmitField(_l('Register'))
 
+    # Rejects the username if it is already taken by another account.
     def validate_username(self, username):
         user = db.session.scalar(sa.select(User).where(
             User.username == username.data
@@ -30,6 +31,7 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError(_('Please use a different username.'))
 
+    # Rejects the email if it is already registered to another account.
     def validate_email(self, email):
         user = db.session.scalar(sa.select(User).where(
             User.email == email.data

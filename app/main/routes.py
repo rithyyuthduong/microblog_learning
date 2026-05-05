@@ -12,6 +12,7 @@ from app.translate import translate
 from app.main import bp
 
 
+# Updates the user's last_seen timestamp and sets the active locale before each request.
 @bp.before_app_request
 def before_request():
     if current_user.is_authenticated:
@@ -20,6 +21,7 @@ def before_request():
     g.locale = str(get_locale())
 
 
+# Renders the home feed with a new post form and paginated posts from followed users.
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
@@ -49,6 +51,7 @@ def index():
                            prev_url=prev_url)
 
 
+# Renders a paginated feed of all posts from every user.
 @bp.route('/explore')
 @login_required
 def explore():
@@ -66,6 +69,7 @@ def explore():
                            prev_url=prev_url)
 
 
+# Renders the profile page for the given username with their paginated posts.
 @bp.route('/user/<username>')
 @login_required
 def user(username):
@@ -84,6 +88,7 @@ def user(username):
                            next_url=next_url, prev_url=prev_url, form=form)
 
 
+# Handles profile editing, saving updated username and about_me fields.
 @bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -101,6 +106,7 @@ def edit_profile():
                            form=form)
 
 
+# Follows the specified user and redirects to their profile page.
 @bp.route('/follow/<username>', methods=['POST'])
 @login_required
 def follow(username):
@@ -122,6 +128,7 @@ def follow(username):
         return redirect(url_for('main.index'))
 
 
+# Unfollows the specified user and redirects to their profile page.
 @bp.route('/unfollow/<username>', methods=['POST'])
 @login_required
 def unfollow(username):
@@ -143,6 +150,7 @@ def unfollow(username):
         return redirect(url_for('main.index'))
 
 
+# Accepts a JSON POST with text and language fields and returns the translated result.
 @bp.route('/translate', methods=['POST'])
 @login_required
 def translate_text():

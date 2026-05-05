@@ -9,6 +9,7 @@ import os
 from flask_mail import Mail
 from flask_moment import Moment
 from flask_babel import Babel, lazy_gettext as _l
+from elasticsearch import Elasticsearch
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -20,10 +21,12 @@ moment = Moment()
 babel = Babel()
 
 
+# Returns the best matching locale from the user's Accept-Languages header.
 def get_locale():
     return request.accept_languages.best_match(current_app.config['LANGUAGES'])
 
 
+# Initializes the Flask app with all extensions, blueprints, and logging handlers.
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
@@ -43,6 +46,11 @@ def create_app(config_class=Config):
     app.register_blueprint(main_bp)
     from app.cli import bp as cli_bp
     app.register_blueprint(cli_bp)
+    app.elasticsearch = Elasticsearch(
+    app.config['ELASTICSEARCH_URL'],
+    verify_certs=False,
+    ssl_show_warn=False
+) if app.config['ELASTICSEARCH_URL'] else None
 
     if not app.debug and not app.testing:
         if app.config['MAIL_SERVER']:

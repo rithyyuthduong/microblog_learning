@@ -4,11 +4,13 @@ from threading import Thread
 from app import mail
 
 
+# Sends an email inside the app context, called from a background thread.
 def send_async_email(app, msg):
     with app.app_context():
         mail.send(msg)
 
 
+# Builds an email message and dispatches it asynchronously on a background thread.
 def send_email(subject, sender, recipients, text_body, html_body):
     msg = Message(subject, sender=sender, recipients=recipients)
     msg.body = text_body

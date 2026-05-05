@@ -11,6 +11,7 @@ from app.models import User
 from app.auth.email import send_password_reset_email
 
 
+# Authenticates the user and redirects to the originally requested or home page.
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -30,12 +31,14 @@ def login():
     return render_template('auth/login.html', title=_('Sign In'), form=form)
 
 
+# Logs out the current user and redirects to the home page.
 @bp.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
 
 
+# Creates a new user account and redirects to the login page on success.
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -52,6 +55,7 @@ def register():
                            form=form)
 
 
+# Sends a password reset email if the submitted address matches a registered account.
 @bp.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
     if current_user.is_authenticated:
@@ -69,6 +73,7 @@ def reset_password_request():
                            title=_('Reset Password'), form=form)
 
 
+# Validates the reset token and updates the user's password if the form is valid.
 @bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
