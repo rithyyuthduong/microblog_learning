@@ -46,6 +46,8 @@ def create_app(config_class=Config):
     app.register_blueprint(main_bp)
     from app.cli import bp as cli_bp
     app.register_blueprint(cli_bp)
+    
+    # Attaches an Elasticsearch client to the app if ELASTICSEARCH_URL is configured, otherwise None to disable search.
     app.elasticsearch = Elasticsearch(
     app.config['ELASTICSEARCH_URL'],
     verify_certs=False,

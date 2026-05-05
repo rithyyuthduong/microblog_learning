@@ -117,6 +117,7 @@ class User(UserMixin, db.Model):
         return db.session.get(User, id)
 
 class Post(db.Model):
+    __searchable__ = ['body']
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     body: so.Mapped[str] = so.mapped_column(sa.String(140))
     timestamp: so.Mapped[datetime] = so.mapped_column(
