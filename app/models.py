@@ -157,8 +157,8 @@ class SearchableMixin(object):
         for obj in db.session.scalars(sa.select(cls)):
             add_to_index(cls.__tablename__, obj)
     
-db.event.listen(db.session, 'before_commit', SearchableMixin.before_commit())
-db.event.listen(db.session, 'after_commit', SearchableMixin.after_commit())
+db.event.listen(db.session, 'before_commit', SearchableMixin.before_commit)
+db.event.listen(db.session, 'after_commit', SearchableMixin.after_commit)
 
 class Post(SearchableMixin, db.Model):
     __searchable__ = ['body']
