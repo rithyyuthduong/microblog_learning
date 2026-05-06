@@ -102,6 +102,6 @@ Based on the [Flask Mega-Tutorial](https://blog.miguelgrinberg.com/post/the-flas
 
 ## Author
 
-**YOUR FULL NAME**
+RITHY YUTH DUONG
 - GitHub: [@rithyyuthduong](https://github.com/rithyyuthduong)
 - LinkedIn: [Rithy Yuth Duong](https://www.linkedin.com/in/rithy-yuth-duong-5021b3379/)
