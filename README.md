@@ -2,7 +2,7 @@
 
 A social blogging app built with Python and Flask, following Miguel Grinberg's [Flask Mega-Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world). Deployed and live on Render.
 
-**Live:** [https://your-app-name.onrender.com](https://your-app-name.onrender.com)
+**Live:** [https://microblog-learning.onrender.com/index]
 
 ## What it does
 
