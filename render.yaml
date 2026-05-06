@@ -2,6 +2,7 @@ services:
   - type: web
     name: microblog
     env: python
+    pythonVersion: "3.11.0"
     buildCommand: pip install -r requirements.txt && flask db upgrade
     startCommand: gunicorn microblog
     envVars:
