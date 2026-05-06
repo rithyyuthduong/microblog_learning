@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: microblog
+    env: python
+    buildCommand: pip install -r requirements.txt && flask db upgrade
+    startCommand: gunicorn microblog
+    envVars:
+      - key: SECRET_KEY
+        generateValue: True
+      - key: FLASK_APP
+        value: microblog
