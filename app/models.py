@@ -43,7 +43,7 @@ class User(UserMixin, db.Model):
     messages_sent: so.WriteOnlyMapped['Message'] = so.relationship(
         foreign_keys='Message.sender_id', back_populates='author'
     )
-    messages_received: so.WriteOnlyMapped['Message'] = so.relation(
+    messages_received: so.WriteOnlyMapped['Message'] = so.relationship(
         foreign_keys='Message.recipient_id', back_populates='recipient'
     )
 
