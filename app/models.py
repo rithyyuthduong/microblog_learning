@@ -29,6 +29,7 @@ class User(UserMixin, db.Model):
     about_me: so.Mapped[Optional[str]] = so.mapped_column(sa.String(140))
     last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(
         default=lambda: datetime.now(timezone.utc))
+    last_message_read_time: so.Mapped[Optional[datetime]]
     following: so.WriteOnlyMapped['User'] = so.relationship(
         secondary=followers,
         primaryjoin='followers.c.follower_id == User.id',
@@ -178,3 +179,16 @@ class Post(SearchableMixin, db.Model):
 @login.user_loader
 def load_user(id):
     return db.session.get(User, int(id))
+
+class Message(db.Model):
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    sender_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
+                                                 index = True)
+    recipient_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
+                                                    index=True)
+    body: so.Mapped[str] = so.mapped_column(sa.String(140))
+    timestamp: so.Mapped[datetime] = so.mapped_column(
+        index=True, default=lambda: datetime.now(timezone.utc))
+    
+    def __repr__(self):
+        return '<Message {}>'.format(self.body)
