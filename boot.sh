@@ -1,5 +1,4 @@
 #!/bin/sh
-source venv/bin/activate
 while true; do
     flask db upgrade
     if [ "$?" -eq 0 ]; then
