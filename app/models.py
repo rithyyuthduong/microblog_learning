@@ -40,6 +40,12 @@ class User(UserMixin, db.Model):
         primaryjoin='followers.c.followed_id == User.id',
         secondaryjoin='followers.c.follower_id == User.id',
         back_populates='following')
+    messages_sent: so.WriteOnlyMapped['Message'] = so.relationship(
+        foreign_keys='Message.sender_id', back_populates='author'
+    )
+    messages_received: so.WriteOnlyMapped['Message'] = so.relation(
+        foreign_keys='Message.recipient_id', back_populates='recipient'
+    )
 
     # Returns a string representation of the User instance.
     def __repr__(self):
@@ -100,6 +106,12 @@ class User(UserMixin, db.Model):
             .group_by(Post)
             .order_by(Post.timestamp.desc())
         )
+    
+    def unread_message_count(self):
+        last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
+        query = sa.select(Message).where(Message.recipient == self,
+                                         Message.timestamp > last_read_time)
+        return db.session.scalar(sa.select(sa.funct.count()).select_from(query.subquery()))
 
     # Generates a signed JWT for password reset, valid for expires_in seconds.
     def get_reset_password_token(self, expires_in=600):
