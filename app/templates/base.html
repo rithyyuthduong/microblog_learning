@@ -140,7 +140,7 @@
       function initialize_notifications() {
         let since = 0;
         setInterval(async function() {
-          const response = await fetch('{{ url_for('main.notification') }}?since=' + since);
+          const response = await fetch('{{ url_for('main.notifications') }}?since=' + since);
           const notifications = await response.json();
           for (let i = 0; i < notifications.length; i++) {
             if (notifications[i].name == 'unread_message_count')
