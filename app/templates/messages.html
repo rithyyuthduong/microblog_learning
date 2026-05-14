@@ -1,6 +1,6 @@
-{% extend 'base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}^
+{% block content %}
     <h1>{{ _('Messages') }}</h1>
     {% for post in messages %}
         {% include '_post.html' %}
