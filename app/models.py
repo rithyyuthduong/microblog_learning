@@ -134,6 +134,14 @@ class User(UserMixin, db.Model):
             return
         return db.session.get(User, id)
     
+    def add_notification(self, name, data):
+        db.session.execute(self.notifications.delete().where(
+            Notification.name == name
+        ))
+        n = Notification(name=name, payload_json=json.dumps(data), user=self)
+        db.session.add(n)
+        return n
+    
 class SearchableMixin(object):
     @classmethod
     def search(cls, expression, page, per_page):
