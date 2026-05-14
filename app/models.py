@@ -202,5 +202,12 @@ class Message(db.Model):
     timestamp: so.Mapped[datetime] = so.mapped_column(
         index=True, default=lambda: datetime.now(timezone.utc))
     
+    author: so.Mapped[User] = so.relationship(
+        foreign_keys='Message.sender_id', back_populates='messages_sent'
+    )
+    recipient: so.Mapped[User] = so.relationship(
+        foreign_keys='Message.recipient_id', back_populates='messages_received'
+    )
+    
     def __repr__(self):
         return '<Message {}>'.format(self.body)
