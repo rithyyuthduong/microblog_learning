@@ -111,7 +111,7 @@ class User(UserMixin, db.Model):
         last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
         query = sa.select(Message).where(Message.recipient == self,
                                          Message.timestamp > last_read_time)
-        return db.session.scalar(sa.select(sa.funct.count()).select_from(query.subquery()))
+        return db.session.scalar(sa.select(sa.func.count()).select_from(query.subquery()))
 
     # Generates a signed JWT for password reset, valid for expires_in seconds.
     def get_reset_password_token(self, expires_in=600):

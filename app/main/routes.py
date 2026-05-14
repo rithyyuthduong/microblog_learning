@@ -187,7 +187,7 @@ def user_popup(username):
 @login_required
 def send_message(recipient):
     user = db.first_or_404(sa.select(User).where(User.username == recipient))
-    form = MessageForm
+    form = MessageForm()
     if form.validate_on_submit():
         msg = Message(author=current_user, recipient=user,
                       body=form.message.data)
@@ -198,7 +198,7 @@ def send_message(recipient):
     return render_template('send_message.html', title=_('Send Message'),
                            form=form, recipient=recipient)
 
-bp.route('/messages')
+@bp.route('/messages')
 @login_required
 def messages():
     current_user.last_message_read_time = datetime.now(timezone.utc)
