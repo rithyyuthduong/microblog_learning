@@ -82,3 +82,5 @@ Traceback (most recent call last):
   File "C:\Users\U-ser\microblog\app\templates\messages.html", line 1, in template
     {% extend 'base.html' %}
 jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'extend'.
+2026-05-14 15:29:50,772 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:85]
+2026-05-14 15:29:55,993 INFO: Microblog startup [in C:\Users\U-ser\microblog\app\__init__.py:85]
