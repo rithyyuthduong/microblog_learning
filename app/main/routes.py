@@ -11,7 +11,7 @@ from app.models import User, Post
 from app.translate import translate
 from app.main import bp
 from app.main.forms import MessageForm
-from app.models import Message
+from app.models import Message, Notification
 
 
 # Updates the user's last_seen timestamp and sets the active locale before each request.
@@ -216,3 +216,16 @@ def messages():
     prev_url = url_for('main.messages', page=messages.prev_num) \
         if messages.has_prev else None
     return render_template('messages.html', messages=messages.items, next_url=next_url, prev_url=prev_url)
+
+@bp.route('/notifications')
+@login_required
+def notifications():
+    since = request.args.get('since', 0.0, type=float)
+    query = current_user.notifications.select().where(
+        Notification.timestamp > since).order_by(Notification.timestamp.asc())
+    notifications = db.session.scalars(query)
+    return [{
+        'name': n.name,
+        'data': n.get_data(),
+        'timestamp': n.timestamp
+    } for n in notifications] 
